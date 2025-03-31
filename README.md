@@ -1,4 +1,4 @@
-# 🚀 HTTP-4-MCP 中间件服务器
+# 🚀 HTTP-4-MCP Middleware Server
 
 <div align="center">
 
@@ -6,23 +6,25 @@
 ![Python](https://img.shields.io/badge/Python-3.8+-green.svg)
 ![License](https://img.shields.io/badge/license-MIT-orange.svg)
 
+[English](README.md) | [中文](README_CN.md)
+
 </div>
 
-## 🌟 项目介绍
+## 🌟 Introduction
 
-HTTP-4-MCP 是一个强大的中间件服务器，它能够将普通的 HTTP 接口 **魔法般地转换** 为 MCP（Model Control Protocol）接口。通过简单的配置，让你的 HTTP API 秒变 MCP 工具！
+HTTP-4-MCP is a powerful middleware server that **magically transforms** regular HTTP interfaces into MCP (Model Control Protocol) interfaces. With simple configuration, your HTTP API becomes an MCP tool instantly!
 
-### ✨ 主要特性
+### ✨ Key Features
 
-- 🔄 **HTTP 转 MCP**：一键转换 HTTP API 为 MCP 接口
-- 📝 **JSON 配置**：简单直观的配置方式
-- 🌊 **SSE 支持**：实时数据流传输
-- 🎨 **可视化配置**：拖拽式界面，像玩游戏一样配置 API
-- 🔥 **热重载**：配置即时生效，无需重启
-- 📊 **完整监控**：详细的日志和错误追踪
-- 🛡️ **安全可靠**：内置错误处理和参数校验
+- 🔄 **HTTP to MCP**: One-click conversion of HTTP APIs to MCP interfaces
+- 📝 **JSON Configuration**: Simple and intuitive configuration
+- 🌊 **SSE Support**: Real-time data streaming
+- 🎨 **Visual Configuration**: Drag-and-drop interface for API configuration
+- 🔥 **Hot Reload**: Instant configuration updates without restart
+- 📊 **Complete Monitoring**: Detailed logging and error tracking
+- 🛡️ **Secure & Reliable**: Built-in error handling and parameter validation
 
-## 👨‍💻 作者信息
+## 👨‍💻 Author Information
 
 <div align="center">
 
@@ -31,77 +33,77 @@ HTTP-4-MCP 是一个强大的中间件服务器，它能够将普通的 HTTP 接
 
 </div>
 
-## 📸 系统演示
+## 📸 System Demo
 
 <div align="center">
 
-### 🖥️ 直观的可视化配置界面
+### 🖥️ Intuitive Visual Configuration Interface
 
-![可视化配置界面](image/image.png)
+![Visual Configuration Interface](image/image.png)
 
-### 🔄 强大的API转换功能
+### 🔄 Powerful API Conversion
 
-![API转换功能](image/image1.png)
+![API Conversion](image/image1.png)
 
-### 📊 支持cURL导入
+### 📊 cURL Import Support
 
-![支持cURL导入](image/image2.png)
+![cURL Import Support](image/image2.png)
 
-### 🚀 工具描述
+### 🚀 Tool Description
 
-![工具描述](image/image3.png)
+![Tool Description](image/image3.png)
 
 </div>
 
-## 🚀 快速开始
+## 🚀 Quick Start
 
-### 📦 安装
+### 📦 Installation
 
 ```bash
-# 克隆仓库
+# Clone repository
 git clone https://gitee.com/tght1211/http-for-mcp-server.git
 # or git clone https://github.com/tght1211/http-for-mcp-server.git
 
 cd http-for-mcp-server
 
-# 安装依赖（推荐使用 uv 包管理器）
+# Install dependencies (recommended using uv package manager)
 uv venv
 uv pip install -r requirements.txt
 ```
 
-### 🎮 启动服务
+### 🎮 Start Service
 
 ```bash
-# 激活虚拟环境
+# Activate virtual environment
 .venv/Scripts/activate  # Windows
 source .venv/bin/activate  # Linux/Mac
 
-# 启动主服务器
+# Start main server
 uv run run.py
 
-# 启动配置界面（可选）
+# Start configuration UI (optional)
 uv run run_config_ui.py
 ```
 
-## 🎯 使用方法
+## 🎯 Usage Guide
 
-### 1️⃣ 配置 API
+### 1️⃣ Configure API
 
-#### 方式一：🎨 可视化配置（推荐）
+#### Method 1: 🎨 Visual Configuration (Recommended)
 
-1. 访问 `http://localhost:8002`
-2. 点击 "添加新接口"
-3. 填写配置参数
-4. 一键保存生效！
+1. Visit `http://localhost:8002`
+2. Click "Add New Interface"
+3. Fill in configuration parameters
+4. Save and apply instantly!
 
-#### 方式二：📝 JSON 配置
+#### Method 2: 📝 JSON Configuration
 
 ```json
 {
   "tools": [
       {
           "name": "weather_api",
-          "description": "获取指定城市的实时天气信息，包括温度、湿度、天气状况、风向和风速。\n    \n    该工具使用两步查询流程：\n    1. 首先通过城市名称获取城市的精确位置ID\n    2. 然后使用位置ID查询实时天气数据\n    \n    示例用法：\n    - 获取\"北京\"的天气信息\n    - 获取\"上海\"的实时天气状况\n    - 查询\"广州\"的温度和湿度\n    \n    返回格式化的天气信息文本，包含城市名称、天气状况、温度、湿度、风向和风速。",
+          "description": "Get real-time weather information for a specified city, including temperature, humidity, weather conditions, wind direction, and wind speed.\n    \n    This tool uses a two-step query process:\n    1. First, get the precise location ID through city name\n    2. Then, query real-time weather data using the location ID\n    \n    Example usage:\n    - Get weather information for \"Beijing\"\n    - Get real-time weather conditions for \"Shanghai\"\n    - Query temperature and humidity for \"Guangzhou\"\n    \n    Returns formatted weather information text, including city name, weather conditions, temperature, humidity, wind direction, and wind speed.",
           "url": "https://devapi.qweather.com/v7/weather/now",
           "method": "GET",
           "params": {
@@ -136,79 +138,79 @@ uv run run_config_ui.py
           "response": {
               "code": {
                   "path": "code",
-                  "desc": "响应状态码"
+                  "desc": "Response status code"
               },
               "updateTime": {
                   "path": "updateTime",
-                  "desc": "数据更新时间"
+                  "desc": "Data update time"
               },
               "fxLink": {
                   "path": "fxLink",
-                  "desc": "详细天气信息链接"
+                  "desc": "Detailed weather information link"
               },
               "now": {
                   "path": "now",
-                  "desc": "实时天气数据对象"
+                  "desc": "Real-time weather data object"
               },
               "now_obsTime": {
                   "path": "now.obsTime",
-                  "desc": "实际观测时间"
+                  "desc": "Actual observation time"
               },
               "now_temp": {
                   "path": "now.temp",
-                  "desc": "当前温度（摄氏度）"
+                  "desc": "Current temperature (Celsius)"
               },
               "now_feelsLike": {
                   "path": "now.feelsLike",
-                  "desc": "体感温度（摄氏度）"
+                  "desc": "Feels like temperature (Celsius)"
               },
               "now_icon": {
                   "path": "now.icon",
-                  "desc": "天气图标代码"
+                  "desc": "Weather icon code"
               },
               "now_text": {
                   "path": "now.text",
-                  "desc": "天气现象文字描述"
+                  "desc": "Weather phenomenon text description"
               },
               "now_wind360": {
                   "path": "now.wind360",
-                  "desc": "风向360度角度"
+                  "desc": "Wind direction 360-degree angle"
               },
               "now_windDir": {
                   "path": "now.windDir",
-                  "desc": "风向方位描述"
+                  "desc": "Wind direction description"
               },
               "now_windScale": {
                   "path": "now.windScale",
-                  "desc": "风力等级"
+                  "desc": "Wind scale"
               },
               "now_windSpeed": {
                   "path": "now.windSpeed",
-                  "desc": "风速（公里/小时）"
+                  "desc": "Wind speed (km/h)"
               },
               "now_humidity": {
                   "path": "now.humidity",
-                  "desc": "相对湿度百分比"
+                  "desc": "Relative humidity percentage"
               },
               "now_precip": {
                   "path": "now.precip",
-                  "desc": "降水量（毫米）"
+                  "desc": "Precipitation (mm)"
               },
               "now_pressure": {
                   "path": "now.pressure",
-                  "desc": "大气压（百帕）"
+                  "desc": "Atmospheric pressure (hPa)"
               },
               "now_vis": {
                   "path": "now.vis",
-                  "desc": "能见度（公里）"
+                  "desc": "Visibility (km)"
               },
               "now_cloud": {
                   "path": "now.cloud",
-                  "desc": "云量百分比"
+                  "desc": "Cloud coverage percentage"
               },
               "now_dew": {
                   "path": "now.dew",
-                  "desc": "露点温度（摄氏度）"
+                  "desc": "Dew point temperature (Celsius)"
               }
           },
           "response_mode": "metadata"
@@ -217,75 +219,75 @@ uv run run_config_ui.py
 }
 ```
 
-### 2️⃣ 连接 MCP
+### 2️⃣ Connect to MCP
 
 ```python
-# SSE 连接地址
+# SSE connection URL
 ws_url = "http://localhost:8000/mcp/sse"
 ```
 
-## 🛠️ 项目结构
+## 🛠️ Project Structure
 
 ```
 📦 http-for-mcp-server
- ┣ 📂 config/            # 配置文件
- ┣ 📂 demo/             # 示例代码
- ┣ 📂 static/           # 静态资源
- ┣ 📜 mcp_server.py     # 主服务器
- ┣ 📜 config_ui.py      # 配置界面
- ┣ 📜 run.py           # 启动脚本
- ┗ 📜 requirements.txt  # 依赖清单
+ ┣ 📂 config/            # Configuration files
+ ┣ 📂 demo/             # Example code
+ ┣ 📂 static/           # Static resources
+ ┣ 📜 mcp_server.py     # Main server
+ ┣ 📜 config_ui.py      # Configuration UI
+ ┣ 📜 run.py           # Startup script
+ ┗ 📜 requirements.txt  # Dependencies
 ```
 
-## 📚 配置参考
+## 📚 Configuration Reference
 
-### 🔧 全局配置
+### 🔧 Global Configuration
 
-| 配置项 | 说明 | 默认值 |
-|--------|------|--------|
-| 🌐 host | 服务器地址 | "0.0.0.0" |
-| 🔌 port | 服务器端口 | 8000 |
-| 🐛 debug | 调试模式 | false |
-| 📝 log_level | 日志级别 | "info" |
+| Configuration | Description | Default |
+|---------------|-------------|---------|
+| 🌐 host | Server address | "0.0.0.0" |
+| 🔌 port | Server port | 8000 |
+| 🐛 debug | Debug mode | false |
+| 📝 log_level | Log level | "info" |
 
-## 🎉 特别功能
+## 🎉 Special Features
 
-### 🔄 cURL 导入
+### 🔄 cURL Import
 
-直接粘贴 cURL 命令，自动生成配置：
+Paste cURL command directly, automatically generate configuration:
 
 ```bash
 curl -X GET 'https://api.example.com/weather?city=beijing'
 ```
 
-### 🎨 像素风界面
+### 🎨 Pixel Art Interface
 
-- 🎮 游戏化的配置体验
-- 🎯 拖拽式参数设置
-- 📊 实时请求测试
-- 🔄 自动生成配置
+- 🎮 Game-like configuration experience
+- 🎯 Drag-and-drop parameter setting
+- 📊 Real-time request test
+- 🔄 Automatically generate configuration
 
-## 🤝 贡献指南
+## 🤝 Contribution Guide
 
-1. 🍴 Fork 本仓库
-2. 🔧 创建特性分支
-3. 📝 提交改动
-4. 🚀 推送分支
-5. 📬 提交 Pull Request
+1. 🍴 Fork this repository
+2. 🔧 Create feature branch
+3. 📝 Submit changes
+4. 🚀 Push branch
+5. 📬 Submit Pull Request
 
-## 📞 获取帮助
+## 📞 Get Help
 
-- 📧 提交 Issue
-- 💬 加入讨论组
-- 📚 查看 Wiki
+- 📧 Submit Issue
+- 💬 Join Discussion Group
+- 📚 View Wiki
 
-## 📄 开源协议
+## 📄 Open Source License
 
-本项目采用 MIT 协议 - 详见 [LICENSE](LICENSE) 文件
+This project uses the MIT license - see [LICENSE](LICENSE) file
 
 ---
 
 <div align="center">
-⭐️ 如果这个项目帮助到你，请给一个 star！⭐️
+⭐️ If this project helps you, please give a star!⭐️
 </div>
 
