@@ -1,0 +1,214 @@
+{
+  "tools": [
+      {
+          "name": "weather_api",
+          "description": "获取指定城市的实时天气信息，包括温度、湿度、天气状况、风向和风速。\n    \n    该工具使用两步查询流程：\n    1. 首先通过城市名称获取城市的精确位置ID\n    2. 然后使用位置ID查询实时天气数据\n    \n    示例用法：\n    - 获取\"北京\"的天气信息\n    - 获取\"上海\"的实时天气状况\n    - 查询\"广州\"的温度和湿度\n    \n    返回格式化的天气信息文本，包含城市名称、天气状况、温度、湿度、风向和风速。",
+          "url": "https://devapi.qweather.com/v7/weather/now",
+          "method": "GET",
+          "params": {
+              "location": {
+                  "type": "string",
+                  "desc": "City name or ID",
+                  "required": true,
+                  "default": "101010100"
+              },
+              "key": {
+                  "type": "string",
+                  "desc": "API key",
+                  "required": true,
+                  "default": "05a3e2c04b65416e912088b76a7a487e"
+              },
+              "lang": {
+                  "type": "string",
+                  "desc": "Language",
+                  "required": false,
+                  "default": "zh"
+              },
+              "unit": {
+                  "type": "string",
+                  "desc": "Unit system",
+                  "required": false,
+                  "default": "m"
+              }
+          },
+          "headers": {
+              "User-Agent": "weather-app/1.0"
+          },
+          "response": {
+              "code": {
+                  "path": "code",
+                  "desc": "响应状态码"
+              },
+              "updateTime": {
+                  "path": "updateTime",
+                  "desc": "数据更新时间"
+              },
+              "fxLink": {
+                  "path": "fxLink",
+                  "desc": "详细天气信息链接"
+              },
+              "now": {
+                  "path": "now",
+                  "desc": "实时天气数据对象"
+              },
+              "now_obsTime": {
+                  "path": "now.obsTime",
+                  "desc": "实际观测时间"
+              },
+              "now_temp": {
+                  "path": "now.temp",
+                  "desc": "当前温度（摄氏度）"
+              },
+              "now_feelsLike": {
+                  "path": "now.feelsLike",
+                  "desc": "体感温度（摄氏度）"
+              },
+              "now_icon": {
+                  "path": "now.icon",
+                  "desc": "天气图标代码"
+              },
+              "now_text": {
+                  "path": "now.text",
+                  "desc": "天气现象文字描述"
+              },
+              "now_wind360": {
+                  "path": "now.wind360",
+                  "desc": "风向360度角度"
+              },
+              "now_windDir": {
+                  "path": "now.windDir",
+                  "desc": "风向方位描述"
+              },
+              "now_windScale": {
+                  "path": "now.windScale",
+                  "desc": "风力等级"
+              },
+              "now_windSpeed": {
+                  "path": "now.windSpeed",
+                  "desc": "风速（公里/小时）"
+              },
+              "now_humidity": {
+                  "path": "now.humidity",
+                  "desc": "相对湿度百分比"
+              },
+              "now_precip": {
+                  "path": "now.precip",
+                  "desc": "降水量（毫米）"
+              },
+              "now_pressure": {
+                  "path": "now.pressure",
+                  "desc": "大气压（百帕）"
+              },
+              "now_vis": {
+                  "path": "now.vis",
+                  "desc": "能见度（公里）"
+              },
+              "now_cloud": {
+                  "path": "now.cloud",
+                  "desc": "云量百分比"
+              },
+              "now_dew": {
+                  "path": "now.dew",
+                  "desc": "露点温度（摄氏度）"
+              }
+          },
+          "response_mode": "metadata"
+      },
+      {
+          "name": "city_search_api",
+          "description": "城市搜索-根据城市名称返回 Location ID",
+          "url": "https://geoapi.qweather.com/v2/city/lookup",
+          "method": "GET",
+          "params": {
+              "location": {
+                  "type": "string",
+                  "desc": "参数: location",
+                  "required": true,
+                  "default": "杭州"
+              },
+              "lang": {
+                  "type": "string",
+                  "desc": "参数: lang",
+                  "required": true,
+                  "default": "zh"
+              },
+              "key": {
+                  "type": "string",
+                  "desc": "api key",
+                  "required": false,
+                  "default": "05a3e2c04b65416e912088b76a7a487e"
+              }
+          },
+          "headers": {
+
+          },
+          "response": {
+              "code": {
+                  "path": "code",
+                  "desc": "响应码"
+              },
+              "location": {
+                  "path": "location",
+                  "desc": "location"
+              },
+              "location@arr": {
+                  "path": "location",
+                  "desc": "location"
+              },
+              "location@arr_name": {
+                  "path": "location.name",
+                  "desc": "名称"
+              },
+              "location@arr_id": {
+                  "path": "location.id",
+                  "desc": "标识符"
+              },
+              "location@arr_lat": {
+                  "path": "location.lat",
+                  "desc": "lat"
+              },
+              "location@arr_lon": {
+                  "path": "location.lon",
+                  "desc": "lon"
+              },
+              "location@arr_adm2": {
+                  "path": "location.adm2",
+                  "desc": "adm2"
+              },
+              "location@arr_adm1": {
+                  "path": "location.adm1",
+                  "desc": "adm1"
+              },
+              "location@arr_country": {
+                  "path": "location.country",
+                  "desc": "country"
+              },
+              "location@arr_tz": {
+                  "path": "location.tz",
+                  "desc": "tz"
+              },
+              "location@arr_utcOffset": {
+                  "path": "location.utcOffset",
+                  "desc": "utcOffset"
+              },
+              "location@arr_isDst": {
+                  "path": "location.isDst",
+                  "desc": "isDst"
+              },
+              "location@arr_type": {
+                  "path": "location.type",
+                  "desc": "类型"
+              },
+              "location@arr_rank": {
+                  "path": "location.rank",
+                  "desc": "rank"
+              },
+              "location@arr_fxLink": {
+                  "path": "location.fxLink",
+                  "desc": "fxLink"
+              }
+          },
+          "response_mode": "metadata"
+      }
+  ]
+}

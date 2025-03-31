@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTTP-4-MCP 配置工具 🛠️</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 加载中遮罩 -->
+    <div id="loading" style="display: none">
+        <div class="loading-container">
+            <div class="pixel-art" style="font-size: 48px;">⏳</div>
+            <p id="loading-message">加载中...</p>
+            <div class="loading-dots">
+                <span>.</span><span>.</span><span>.</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 警告消息容器 -->
+    <div id="alert-container"></div>
+    
+    <div class="container">
+        <!-- 页头 -->
+        <header class="app-header">
+            <h1><span class="emoji-icon">🛠️</span> HTTP-4-MCP 配置工具</h1>
+            <div>
+                <button id="reload-btn" class="btn btn-primary">
+                    <span class="emoji-icon">🔄</span> 重载配置
+                </button>
+            </div>
+        </header>
+        
+        <!-- 主内容区 -->
+        <div class="content">
+            <!-- 标签页导航 -->
+            <div class="tabs">
+                <div class="tab-item active" id="config-tab" data-target="config-content">
+                    <span class="emoji-icon">⚙️</span> 配置管理
+                </div>
+                <div class="tab-item" id="import-tab" data-target="import-content">
+                    <span class="emoji-icon">📥</span> cURL导入
+                </div>
+                <div class="tab-item" id="docs-tab" data-target="docs-content">
+                    <span class="emoji-icon">📚</span> 使用帮助
+                </div>
+            </div>
+            
+            <!-- 配置内容 -->
+            <div id="config-content" class="tab-content">
+                <div class="card pixel-border">
+                    <div class="card-header">
+                        <h2 class="card-title"><span class="emoji-icon">🧰</span> API工具列表</h2>
+                        <button id="add-tool-btn" class="btn btn-primary btn-pixel">
+                            <span class="emoji-icon">➕</span> 添加工具
+                        </button>
+                    </div>
+                    
+                    <!-- 工具列表 -->
+                    <div id="tools-container" class="grid">
+                        <!-- 工具卡片将通过JS动态添加 -->
+                        <div class="card">
+                            <div class="alert alert-info">
+                                <span class="emoji-icon">⏳</span>
+                                <div>
+                                    <p>加载中...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- cURL导入内容 -->
+            <div id="import-content" class="tab-content" style="display: none;">
+                <div class="card pixel-border">
+                    <div class="card-header">
+                        <h2 class="card-title"><span class="emoji-icon">🧙‍♂️</span> cURL导入向导</h2>
+                    </div>
+                    
+                    <div class="card-body">
+                        <p>粘贴curl命令，系统将自动解析并生成API工具配置：</p>
+                        
+                        <form id="curl-form">
+                            <div class="form-group">
+                                <label class="form-label">curl命令 <span class="emoji-icon">📋</span></label>
+                                <textarea id="curl-command" class="form-input form-textarea" placeholder="例如: curl -X GET 'https://api.example.com/weather?city=beijing' -H 'Authorization: Bearer token'"></textarea>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary btn-pixel">
+                                <span class="emoji-icon">✨</span> 解析并生成配置
+                            </button>
+                        </form>
+                        
+                        <div class="import-steps">
+                            <p><strong>自动处理流程：</strong></p>
+                            <ol>
+                                <li><span class="step-number">1</span> <span class="step-text"><strong>解析命令</strong>：提取URL、HTTP方法和参数</span></li>
+                                <li><span class="step-number">2</span> <span class="step-text"><strong>提取请求头</strong>：包括认证信息等</span></li>
+                                <li><span class="step-number">3</span> <span class="step-text"><strong>生成配置</strong>：创建工具模板</span></li>
+                                <li><span class="step-number">4</span> <span class="step-text"><strong>等待确认</strong>：您可以编辑后保存</span></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 使用帮助内容 -->
+            <div id="docs-content" class="tab-content" style="display: none;">
+                <div class="card pixel-border">
+                    <div class="card-header">
+                        <h2 class="card-title"><span class="emoji-icon">📚</span> 使用指南</h2>
+                    </div>
+                    
+                    <div class="card-body">
+                        <div class="docs-section">
+                            <h3><span class="emoji-icon">🔰</span> 基本使用</h3>
+                            <p>HTTP-4-MCP 配置工具允许您轻松地将HTTP API转换为MCP工具，无需编写代码。通过简单的界面操作，您可以快速配置一个mcp-server。</p>
+                        </div>
+                        
+                        <div class="docs-section">
+                            <h3><span class="emoji-icon">🛠️</span> 添加新工具</h3>
+                            <ol>
+                                <li>点击界面右上角的<strong>"添加工具"</strong>按钮</li>
+                                <li>填写工具名称、描述、URL和HTTP方法</li>
+                                <li>添加所需的参数（名称、类型、描述等）</li>
+                                <li>配置响应映射（输出字段与API响应路径的对应关系）</li>
+                                <li>添加必要的请求头（如Authorization等）</li>
+                                <li>点击<strong>"保存"</strong>按钮完成创建</li>
+                            </ol>
+                        </div>
+                        
+                        <div class="docs-section">
+                            <h3><span class="emoji-icon">📥</span> 从cURL导入</h3>
+                            <ol>
+                                <li>切换到<strong>"cURL导入"</strong>标签页</li>
+                                <li>将您的curl命令粘贴到文本框中</li>
+                                <li>点击<strong>"解析并生成配置"</strong>按钮</li>
+                                <li>检查并根据需要调整自动生成的配置</li>
+                                <li>点击<strong>"保存"</strong>按钮确认创建</li>
+                            </ol>
+                            <p>系统会自动从curl命令中提取URL、HTTP方法、参数和请求头等信息，大大简化配置过程。</p>
+                            <p class="docs-tip" style="margin-top: 10px;"><span class="emoji-icon">💡</span> <strong>提示</strong>：系统会自动生成默认响应映射，包括数组处理（使用<code>@arr</code>后缀）。您可以在保存前根据实际API修改映射。</p>
+                        </div>
+                        
+                        <div class="docs-section">
+                            <h3><span class="emoji-icon">🔄</span> 重载配置</h3>
+                            <p>当您添加、修改或删除API工具后，点击顶部的<strong>"重载配置"</strong>按钮使更改在MCP服务器上立即生效，无需重启服务器。</p>
+                        </div>
+                        
+                        <div class="docs-section">
+                            <h3><span class="emoji-icon">🧪</span> 测试API</h3>
+                            <p>在编辑工具时，您可以使用<strong>"测试API"</strong>按钮发送实际请求并查看响应结果。这有助于验证配置是否正确，并可以根据实际响应自动生成映射建议。</p>
+                        </div>
+                        
+                        <div class="docs-tip">
+                            <span class="emoji-icon">🎮</span>
+                            <div>
+                                <p><strong>小提示：</strong>此界面结合了Apple设计风格和复古像素风格，既美观又实用。享受创建API工具的乐趣吧！</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 工具表单模态框 -->
+    <div id="tool-modal" class="modal">
+        <div class="modal-content pixel-border">
+            <div class="modal-header">
+                <h3 id="modal-title" class="modal-title">添加新API工具 🛠️</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            
+            <form id="tool-form">
+                <div class="form-group">
+                    <label class="form-label">工具名称 <span class="emoji-icon">🏷️</span></label>
+                    <input type="text" name="name" class="form-input" required placeholder="例如: weather_api （建议用英文）">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">描述 <span class="emoji-icon">📝</span></label>
+                    <textarea name="description" class="form-input" required placeholder="MCP TOOL 描述，请描述此工具的功能..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">URL <span class="emoji-icon">🔗</span></label>
+                    <input type="url" name="url" class="form-input" required placeholder="例如: https://api.example.com/weather">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">HTTP方法 <span class="emoji-icon">📤</span></label>
+                    <select name="method" class="form-input">
+                        <option value="GET">GET</option>
+                        <option value="POST">POST</option>
+                        <option value="PUT">PUT</option>
+                        <option value="DELETE">DELETE</option>
+                    </select>
+                </div>
+                
+                <h4><span class="emoji-icon">📊</span> 参数配置</h4>
+                <div class="params-container-wrapper">
+                    <div id="params-container">
+                        <!-- 参数字段将通过JS动态添加 -->
+                    </div>
+                    
+                    <div class="form-actions-row">
+                        <button type="button" id="add-param-btn" class="btn btn-info">
+                            <span class="emoji-icon">➕</span> 添加参数
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="form-actions-row">
+                    <button type="button" id="test-api-btn" class="btn btn-success">
+                        <span class="emoji-icon">🧪</span> 测试API
+                    </button>
+                </div>
+                
+                <h4><span class="emoji-icon">🔄</span> 响应映射与模式</h4>
+                <div class="form-group">
+                    <div class="response-mode-selector pixel-border" style="margin-bottom: 10px;  border: var(--pixel-size) solid #ffffff;">
+                        <label class="response-mode-label"><span class="emoji-icon">📊</span> 响应格式:</label>
+                        <div class="response-mode-options">
+                            <label class="response-mode-option" style="margin-right: 10px;">
+                                <input type="radio" name="response_mode" value="normal">
+                                <span class="response-mode-name">普通模式</span>
+                                <span class="response-mode-hint">直接返回数据</span>
+                            </label>
+                            <label class="response-mode-option" style="margin-right: 10px;">
+                                <input type="radio" name="response_mode" value="metadata" checked>
+                                <span class="response-mode-name">元数据模式</span>
+                                <span class="response-mode-hint">包含字段描述</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="mapping-description">
+                        <p>定义HTTP响应到MCP响应的映射，每行格式：<code>输出字段: 响应路径</code></p>
+                        <ul>
+                            <li><strong>输出字段</strong>：工具输出的字段名（建议使用下划线分隔）</li>
+                            <li><strong>响应路径</strong>：原始API响应中的字段路径</li>
+                            <li><strong>数组类型</strong>：添加<code>@arr</code>后缀（如<code>sources@arr: refer.sources</code>）</li>
+                        </ul>
+                    </div>
+                    <textarea id="response-mapping" class="form-input form-textarea"></textarea>
+                </div>
+                
+                <h4><span class="emoji-icon">📋</span> 请求头</h4>
+                <div class="form-group">
+                    <div class="header-description">
+                        <p>每行一个请求头，格式：<code>Header-Name: header value</code></p>
+                    </div>
+                    <textarea id="headers-input" class="form-input form-textarea" placeholder="例如:&#10;User-Agent: weather-app/1.0&#10;Accept: application/json"></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-pixel">
+                        <span class="emoji-icon">💾</span> 保存
+                    </button>
+                    <button type="button" class="btn btn-danger modal-close">
+                        <span class="emoji-icon">❌</span> 取消
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- 响应预览模态框 -->
+    <div id="response-preview-modal" class="modal">
+        <div class="modal-content pixel-border">
+            <div class="modal-header">
+                <h3 class="modal-title">API响应预览 📡</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <button id="copy-response-btn" class="btn btn-info">
+                        <span class="emoji-icon">📋</span> 复制
+                    </button>
+                </div>
+                <pre id="response-preview" class="code-block"></pre>
+            </div>
+            <div class="form-actions">
+                <button type="button" id="apply-response-mapping-btn" class="btn btn-primary">
+                    <span class="emoji-icon">✅</span> 应用映射
+                </button>
+                <button type="button" id="generate-full-mapping-btn" class="btn btn-info">
+                    <span class="emoji-icon">🔄</span> 生成完整映射
+                </button>
+                <button type="button" class="btn btn-danger modal-close">
+                    <span class="emoji-icon">❌</span> 关闭
+                </button>
+            </div>
+            <div class="mapping-description" style="margin-top: 15px; font-size: 13px;">
+                <p><strong>映射格式说明：</strong></p>
+                <ul style="margin-top: 5px;">
+                    <li>左侧是<strong>输出字段名</strong>，将点号替换为下划线</li>
+                    <li>右侧是<strong>原始响应路径</strong>，指向API返回的数据</li>
+                    <li>数组字段添加<strong>@arr</strong>后缀，如 <code>sources@arr: refer.sources</code></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/static/js/app.js"></script>
+    
+    <!-- 页脚区域 -->
+    <footer class="app-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="copyright">
+                    © 2025 HTTP-4-MCP 配置工具
+                </div>
+                <div class="social-links">
+                    <a href="https://github.com/tght1211" target="_blank" class="btn btn-outline">
+                        <img src="/static/img/github.svg" alt="GitHub" class="icon-img"> GitHub
+                    </a>
+                    <a href="https://gitee.com/tght1211" target="_blank" class="btn btn-outline">
+                        <img src="/static/img/gitee.svg" alt="Gitee" class="icon-img"> Gitee
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html> 
