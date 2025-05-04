@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/tght1211-http-4-mcp-badge.png)](https://mseep.ai/app/tght1211-http-4-mcp)
+
 # 🚀 HTTP-4-MCP Middleware Server
 
 <div align="center">
